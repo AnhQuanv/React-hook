@@ -4,8 +4,28 @@ import logo from './../logo.svg'
 
 class DisplayInfor extends React.Component {
 
-    state = {
-        isShowLisstUser: true
+    constructor(pros) {
+        console.log('>>>>> call constructor: 1')
+        super(pros);
+        this.state = {
+            isShowLisstUser: true
+        }
+    }
+
+    componentDidMount() {
+        console.log('>>>> Call me component did mount')
+        setTimeout(() => {
+            document.title = 'banhkute'
+        }, 3000)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('>>>> Call me component did update', this.props, prevProps)
+        if (this.props.listUsers !== prevProps.listUsers) {
+            if (this.props.listUsers.length === 5) {
+                alert('You got 5 users')
+            }
+        }
     }
 
     handleShowHide = () => {
@@ -15,7 +35,7 @@ class DisplayInfor extends React.Component {
     }
 
     render() {
-
+        console.log('>>>> cal me render')
         const { listUsers } = this.props
         // pros => properties
         return (
