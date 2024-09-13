@@ -40,7 +40,6 @@ class AddUserInfor extends React.Component {
                         type='text'
                         onChange={(event) => this.handleOnChangeInput(event)}
                     />
-                    <button>Submit</button>
 
                     <label>Your age: </label>
                     <input
