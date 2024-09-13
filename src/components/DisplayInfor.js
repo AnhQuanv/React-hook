@@ -28,17 +28,19 @@ class DisplayInfor extends React.Component {
                     </span>
                 </div>
                 {this.state.isShowLisstUser &&
-                    <div>
-                        {listUsers.map((user) => {
-                            return (
-                                <div key={user.id} className={+user.age > 18 ? 'blue' : 'red'}>
-                                    <div >My name's {user.name}</div>
-                                    <div>My age's {user.age}</div>
-                                    <hr />
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <>
+                        <div>
+                            {listUsers.map((user) => {
+                                return (
+                                    <div key={user.id} className={+user.age > 18 ? 'blue' : 'red'}>
+                                        <div >My name's {user.name}</div>
+                                        <div>My age's {user.age}</div>
+                                        <hr />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </>
                 }
             </div>
         )

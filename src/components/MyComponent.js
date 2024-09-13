@@ -1,5 +1,5 @@
 import React from 'react'
-import UserInfor from './AddUserInfor'
+import AddUserInfor from './AddUserInfor'
 import DisplayInfor from './DisplayInfor';
 
 class MyComponent extends React.Component {
@@ -23,16 +23,21 @@ class MyComponent extends React.Component {
     render() {
         // DRY
         return (
-            <div>
-                <UserInfor
-                    handleAddNewUser={this.handleAddNewUser}
-                />
-                <br /> <br />
-                <DisplayInfor
-                    listUsers={this.state.listUsers}
+            <>
+                <div className='a'>
+                    <AddUserInfor
+                        handleAddNewUser={this.handleAddNewUser}
+                    />
+                    <br /> <br />
+                    <DisplayInfor
+                        listUsers={this.state.listUsers}
 
-                />
-            </div>
+                    />
+                </div>
+                <div className='b'>
+
+                </div>
+            </>
         );
     }
 }
