@@ -1,53 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AddUserInfor from './AddUserInfor'
 import DisplayInfor from './DisplayInfor';
 
-class MyComponent extends React.Component {
+const MyComponent = (props) => {
 
-    state = {
-        listUsers: [
+    const [listUsers, setListUsers] = useState(
+        [
             { id: 1, name: 'Vo Anh Quan', age: '16' },
             { id: 2, name: 'Banh', age: '25' },
             { id: 3, name: 'Buoi', age: '69' }
 
         ]
-    }
+    );
 
-    handleAddNewUser = (userObj) => {
-        this.setState({
-            listUsers: [userObj, ...this.state.listUsers]
-        })
-    }
 
-    handleDeleteUser = (userId) => {
-        let listUsersClone = this.state.listUsers;
-        listUsersClone = listUsersClone.filter(item => item.id !== userId)
-        this.setState({
-            listUsers: listUsersClone
-        })
-    }
 
-    //JSX
-    render() {
-        // DRY
-        return (
-            <>
-                <div className='a'>
-                    <AddUserInfor
-                        handleAddNewUser={this.handleAddNewUser}
-                    />
-                    <br /> <br />
-                    <DisplayInfor
-                        listUsers={this.state.listUsers}
-                        handleDeleteUser={this.handleDeleteUser}
-                    />
-                </div>
-                <div className='b'>
+    const handleAddNewUser = (userObj) => {
+        setListUsers([userObj, ...listUsers]);
 
-                </div>
-            </>
-        );
-    }
-}
+    };
 
+    const handleDeleteUser = (userId) => {
+        let listUsersClone = [...listUsers];
+        listUsersClone = listUsersClone.filter(item => item.id !== userId);
+        setListUsers(listUsersClone);
+    };
+
+    return (
+        <>
+            <div className='a'>
+                <AddUserInfor
+                    handleAddNewUser={handleAddNewUser}
+                />
+                <br /> <br />
+                <DisplayInfor
+                    listUsers={listUsers}
+                    handleDeleteUser={handleDeleteUser}
+                />
+            </div>
+            <div className='b'>
+
+            </div>
+        </>
+    );
+};
 export default MyComponent;
