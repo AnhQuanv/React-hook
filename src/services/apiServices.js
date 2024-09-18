@@ -13,6 +13,7 @@ const postCreateNewUser = (email, password, username, role, image) => {
 }
 
 const getAllUsers = () => {
+
     return axios.get('api/v1/participant/all');
 
 }
