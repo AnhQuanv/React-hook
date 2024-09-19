@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { FcPlus } from 'react-icons/fc';
-import { toast } from 'react-toastify';
-import { putUpdateUser } from '../../../services/apiServices';
+
 import _ from 'lodash'
 
-const ModalUpdateUser = (props) => {
-    const { show, setShow, dataUpdate } = props;
+const ModalViewUser = (props) => {
+    const { show, setShow, dataView } = props;
 
     const handleClose = () => {
         setShow(false)
@@ -17,7 +15,7 @@ const ModalUpdateUser = (props) => {
         setRole("");
         setImage("");
         setPreviewImage("");
-        props.resetUpdateData();
+        props.resetViewData();
     };
 
 
@@ -29,50 +27,20 @@ const ModalUpdateUser = (props) => {
     const [previewImage, setPreviewImage] = useState("");
 
     useEffect(() => {
-        if (!_.isEmpty(dataUpdate)) {
-            console.log(">>>>>>> chek dataupdate", dataUpdate)
-
-            setEmail(dataUpdate.email);
-            setUsername(dataUpdate.username);
-            setRole(dataUpdate.role);
+        if (!_.isEmpty(dataView)) {
+            setEmail(dataView.email);
+            setUsername(dataView.username);
+            setRole(dataView.role);
             setImage("");
-            if (dataUpdate.image) {
-                setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+            if (dataView.image) {
+                setPreviewImage(`data:image/jpeg;base64,${dataView.image}`);
             }
         }
-    }, [dataUpdate]);
-
-
-    const handleUploadImage = (event) => {
-        if (event.target && event.target.files && event.target.files[0]) {
-            setPreviewImage(URL.createObjectURL(event.target.files[0]));
-            setImage((event.target.files[0]));
-        }
-    }
+    }, [dataView]);
 
 
 
-    const handleSubmitCreateUser = async () => {
 
-        //validate
-
-
-
-        let data = await putUpdateUser(dataUpdate.id, username, role, image);
-        console.log('>>>>> check ', data)
-        if (data && data.EC === 0) {
-            toast.success(data.EM);
-            handleClose();
-            // await props.fetchListUsers();
-            // props.setCurrentPage(1);
-            await props.fetchListUsersWithPaginate(props.currentPage);
-        }
-
-        if (data && data.EC !== 0) {
-            toast.error(data.EM)
-        }
-
-    }
     return (
         <>
             {/* <Button variant="primary" onClick={handleShow} >
@@ -94,18 +62,14 @@ const ModalUpdateUser = (props) => {
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Username</label>
-                            <input type="text" className="form-control" value={username} onChange={(event) => { setUsername(event.target.value) }} />
+                            <input type="text" className="form-control" value={username} disabled={true} onChange={(event) => { setUsername(event.target.value) }} />
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Role</label>
-                            <select className="form-select" onChange={(event) => { setRole(event.target.value) }}>
+                            <select className="form-select" disabled={true} onChange={(event) => { setRole(event.target.value) }}>
                                 <option value="USER">USER</option>
                                 <option value='ADMIN'>ADMIN</option>
                             </select>
-                        </div>
-                        <div className='col-md-12'>
-                            <label className="form-label label-upload" htmlFor='labelUpload'> <FcPlus /> Upload File Image</label>
-                            <input type='file' id='labelUpload' hidden onChange={(event) => handleUploadImage(event)} />
                         </div>
                         <div className='col-md-12 img-preview'>
                             {previewImage ?
@@ -121,13 +85,10 @@ const ModalUpdateUser = (props) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
-                        Save
-                    </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
 
-export default ModalUpdateUser;
+export default ModalViewUser;
