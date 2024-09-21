@@ -82,7 +82,6 @@ const ManageUser = (props) => {
                 </div>
                 <div className="table-users-container">
                     {/* <TableUser listUsers={listUsers} handleClickBtnUpdate={handleClickBtnUpdate} handleClickBtnView={handleClickBtnView} handleClickBtnDelete={handleClickBtnDelete} /> */}
-                    const [pageCount, setPageCount] = useState(0);
                     <TabelUserPaginate listUsers={listUsers} handleClickBtnUpdate={handleClickBtnUpdate} handleClickBtnView={handleClickBtnView} handleClickBtnDelete={handleClickBtnDelete} fetchListUsersWithPaginate={fetchListUsersWithPaginate} pageCount={pageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                 </div>
                 <ModalViewUser show={showModalViewUser} setShow={setShowModalViewUser} fetchListUsers={fetchListUsers} dataView={dataView} resetViewData={resetViewData} />

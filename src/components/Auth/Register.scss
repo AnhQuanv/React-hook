@@ -1,0 +1,56 @@
+.signup-container {
+    padding: 100px 0;
+    height: 100px;
+    .title {
+        font-size: 50px;
+        text-align: center;
+        font-family: "Roboto", sans-serif; /* Font hiện đại */
+        letter-spacing: 2px; /* Giãn cách giữa các chữ cái */
+        text-transform: uppercase; /* Chuyển tất cả các chữ cái thành chữ in hoa */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Đổ bóng cho chữ */
+        margin-bottom: 50px;
+    }
+
+    .content-form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        input {
+            margin-top: 3px;
+        }
+
+        .btn-signup {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+
+            button {
+                width: 100%;
+                height: 40px;
+                border: none;
+                margin: 20px 0;
+                border-radius: 5px;
+                color: white;
+                background: black;
+            }
+        }
+
+        .back {
+            cursor: pointer;
+        }
+
+        .form-group {
+            position: relative;
+            .showpass {
+                span {
+                    position: absolute;
+                    right: 15px;
+                    top: 67%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

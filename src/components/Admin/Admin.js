@@ -4,8 +4,7 @@ import './Admin.scss';
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom"
 import { FcPlus } from 'react-icons';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const Admin = (props) => {
@@ -26,16 +25,7 @@ const Admin = (props) => {
 
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover />
+
         </div>
     )
 }
