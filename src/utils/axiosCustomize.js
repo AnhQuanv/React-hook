@@ -1,6 +1,10 @@
 import axios from "axios";
 import NProgress from "nprogress";
 
+NProgress.configure({
+    showSpinner: false,
+    trickleSpeed: 100,
+})
 
 const instance = axios.create({
     baseURL: 'http://localhost:8081/',
