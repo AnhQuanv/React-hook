@@ -5,6 +5,7 @@ import { postLogin } from '../../services/apiServices';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction';
+import { ImSpinner2 } from "react-icons/im";
 
 const Login = (props) => {
 
@@ -12,21 +13,44 @@ const Login = (props) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     const handleLogin = async () => {
         //validate
+        const isValidateEmail = validateEmail(email);
+        if (!isValidateEmail) {
+            toast.error('Invailid email')
+            return;
+        }
+        if (!password) {
+            toast.error('Invailid password')
+            return;
+        }
+        setIsLoading(true);
 
         //submit apis
         let data = await postLogin(email, password);
         if (data && data.EC === 0) {
-            dispatch(doLogin(data))
+            dispatch(doLogin(data));
             toast.success(data.EM);
-            navigate('/')
+            setIsLoading(false);
+            navigate('/');
 
         }
 
         if (data && +data.EC !== 0) {
-            toast.error(data.EM)
+            toast.error(data.EM);
+            setIsLoading(false);
+
+
         }
     }
 
@@ -66,7 +90,11 @@ const Login = (props) => {
                     <button
                         className='btn-submit'
                         onClick={() => handleLogin()}
-                    >Login to Quiz</button>
+                        disabled={isLoading}
+                    >
+                        {isLoading === true && <ImSpinner2 className="loader-icon" />}
+                        <span>Login to Quiz</span>
+                    </button>
                 </div>
                 <div className='text-center'>
                     <span className='back' onClick={() => { navigate('/') }}> &#60;&#60; Go to Homepage</span>
