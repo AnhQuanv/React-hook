@@ -54,5 +54,10 @@ const getDataQuiz = (id) => {
 
 }
 
+const postSubmitQuiz = (payload) => {
+    return axios.post(`/api/v1/quiz-submit`, { ...payload });
 
-export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUsers, getUserWithPaginate, postLogin, postRegister, getQuizByUser, getDataQuiz }
+}
+
+
+export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUsers, getUserWithPaginate, postLogin, postRegister, getQuizByUser, getDataQuiz, postSubmitQuiz }

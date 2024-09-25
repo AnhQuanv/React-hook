@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { getDataQuiz } from "../../services/apiServices";
+import { getDataQuiz, postSubmitQuiz } from "../../services/apiServices";
 import _ from 'lodash';
 import './DetailQuiz.scss';
 import Question from "./Question";
+import ModalResult from "./ModalResult";
 
 
 const DetailQuiz = (props) => {
@@ -14,6 +15,10 @@ const DetailQuiz = (props) => {
 
     const [dataQuiz, setDataQuiz] = useState("");
     const [index, setIndex] = useState(0);
+
+    const [isShowModalResult, SetIsShowModalResult] = useState(false);
+    const [dataModalResult, setDataModalResult] = useState({});
+
 
     useEffect(() => {
         fetchQuestions();
@@ -74,7 +79,7 @@ const DetailQuiz = (props) => {
         }
     }
 
-    const handleFinish = () => {
+    const handleFinish = async () => {
         console.log('>>>>data: ', dataQuiz);
         let payload = {
             quizId: +quizId,
@@ -97,7 +102,20 @@ const DetailQuiz = (props) => {
                 })
             })
             payload.answers = temp;
-            console.log("final payload: ", payload);
+            // Submit API
+            let res = await postSubmitQuiz(payload);
+            console.log(res);
+            if (res && res.EC === 0) {
+                setDataModalResult({
+                    countCorrect: res.DT.countCorrect,
+                    countTotal: res.DT.countTotal,
+                    quizData: res.DT.quizData,
+                })
+                SetIsShowModalResult(true);
+            } else {
+                alert('me');
+            }
+
         }
     }
     return (
@@ -124,6 +142,11 @@ const DetailQuiz = (props) => {
             <div className="right-content">
                 count down
             </div>
+            <ModalResult
+                show={isShowModalResult}
+                setShow={SetIsShowModalResult}
+                dataModalResult={dataModalResult}
+            />
         </div>
     )
 }
