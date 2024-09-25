@@ -21,7 +21,6 @@ const DetailQuiz = (props) => {
 
     const fetchQuestions = async () => {
         let res = await getDataQuiz(quizId);
-        console.log('check questions: ', res);
         if (res && res.EC === 0) {
             let raw = res.DT;
             let data = _.chain(raw)
@@ -43,7 +42,6 @@ const DetailQuiz = (props) => {
                 }
                 )
                 .value();
-            console.log(data);
             setDataQuiz(data);
         }
     }
@@ -75,6 +73,33 @@ const DetailQuiz = (props) => {
             setDataQuiz(dataQuizClone);
         }
     }
+
+    const handleFinish = () => {
+        console.log('>>>>data: ', dataQuiz);
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        };
+        let temp = [];
+        if (dataQuiz && dataQuiz.length > 0) {
+            dataQuiz.forEach(question => {
+                let questionId = question.questionId;
+                let userAnswerId = [];
+
+                question.answers.forEach(item => {
+                    if (item.isSelected) {
+                        userAnswerId.push(item.id);
+                    }
+                })
+
+                temp.push({
+                    questionId: +questionId, userAnswerId
+                })
+            })
+            payload.answers = temp;
+            console.log("final payload: ", payload);
+        }
+    }
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -91,7 +116,7 @@ const DetailQuiz = (props) => {
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
                     <button className="btn btn-primary" onClick={() => handleNext()}>Next</button>
-                    <button className="btn btn-warning" onClick={() => handleNext()}>Finish</button>
+                    <button className="btn btn-warning" onClick={() => handleFinish()}>Finish</button>
 
 
                 </div>
