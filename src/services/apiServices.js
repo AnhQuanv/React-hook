@@ -1,7 +1,7 @@
 import axios from "../utils/axiosCustomize";
 
 const postCreateNewUser = (email, password, username, role, image) => {
-
+    // form-data
     const data = new FormData();
     data.append('email', email);
     data.append('password', password);
@@ -56,8 +56,21 @@ const getDataQuiz = (id) => {
 
 const postSubmitQuiz = (payload) => {
     return axios.post(`/api/v1/quiz-submit`, { ...payload });
+}
+
+const postCreateNewQuiz = (description, name, difficulty, image) => {
+    const data = new FormData();
+    data.append('description', description);
+    data.append('name', name);
+    data.append('difficulty', difficulty);
+    data.append('quizImage', image);
+    return axios.post(`/api/v1/quiz`, data);
 
 }
 
+const getAllQuizForAdmin = () => {
+    return axios.get(`/api/v1/quiz/all`);
 
-export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUsers, getUserWithPaginate, postLogin, postRegister, getQuizByUser, getDataQuiz, postSubmitQuiz }
+}
+
+export { postCreateNewUser, getAllUsers, putUpdateUser, deleteUsers, getUserWithPaginate, postLogin, postRegister, getQuizByUser, getDataQuiz, postSubmitQuiz, postCreateNewQuiz, getAllQuizForAdmin }
