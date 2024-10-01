@@ -88,20 +88,20 @@ const deleteQuiz = (id) => {
     return axios.delete(`api/v1/quiz/${id}`);
 }
 
-const postCreateNewQuestionForQuiz = (quizId, description, questionImage) => {
+const postCreateNewQuestionForQuiz = (quiz_id, description, questionImage) => {
     const data = new FormData();
-    data.append('quizId', quizId);
+    data.append('quiz_id', quiz_id);
     data.append('description', description);
     data.append('questionImage', questionImage);
 
-    return axios.post('api/v1/question', data);
+    return axios.post('/api/v1/question', data);
 }
 
-const postCreateNewAnswerForQuiz = (description, correct_answer, questionId) => {
+const postCreateNewAnswerForQuiz = (description, correct_answer, question_id) => {
 
 
-    return axios.post('api/v1/answer', {
-        description, correct_answer, questionId
+    return axios.post('/api/v1/answer', {
+        description, correct_answer, question_id
     });
 }
 
