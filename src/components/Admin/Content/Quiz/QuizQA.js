@@ -7,7 +7,7 @@ import { RiImageAddFill } from 'react-icons/ri';
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 import Lightbox from "react-awesome-lightbox";
-import { getAllQuizForAdmin, postCreateNewAnswerForQuiz, postCreateNewQuestionForQuiz, getQuizWithQA } from '../../../../services/apiServices';
+import { getAllQuizForAdmin, getQuizWithQA, postUpsertQA, } from '../../../../services/apiServices';
 import { toast } from 'react-toastify';
 
 const QuizQA = (props) => {
@@ -122,8 +122,6 @@ const QuizQA = (props) => {
         }
     }
 
-
-
     const handleAddRemoveAnswer = (type, questionId, AnswerId) => {
         console.log("check ", type, questionId, AnswerId)
         let questionsClone = _.cloneDeep(questions);
@@ -189,9 +187,7 @@ const QuizQA = (props) => {
         }
     }
 
-
     //submit quesstion
-
     const handleSubmitQuestionForQuiz = async () => {
 
         // validate 
@@ -238,17 +234,31 @@ const QuizQA = (props) => {
             return;
         }
 
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(+selectedQuiz.value, question.description, question.imageFile, question.id);
-
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuiz(answer.description, answer.correct_answer, q.DT.id);
+        let questionsClone = _.cloneDeep(questions);
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await toBase64(questionsClone[i].imageFile);
             }
         }
+        let res = await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: questionsClone
+        });
 
-        toast.success('Create question and answer success!');
-        setQuestions(initQuestion);
+        if (res && res.EC === 0) {
+            toast.success(res.EM);
+            fetchQuizWithQA();
+        }
+        // setQuestions(initQuestion);
     }
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
+
 
     const handlePreivewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
