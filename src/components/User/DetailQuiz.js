@@ -81,7 +81,6 @@ const DetailQuiz = (props) => {
     }
 
     const handleFinish = async () => {
-        console.log('>>>>data: ', dataQuiz);
         let payload = {
             quizId: +quizId,
             answers: []
@@ -105,7 +104,6 @@ const DetailQuiz = (props) => {
             payload.answers = temp;
             // Submit API
             let res = await postSubmitQuiz(payload);
-            console.log(res);
             if (res && res.EC === 0) {
                 setDataModalResult({
                     countCorrect: res.DT.countCorrect,
@@ -144,6 +142,7 @@ const DetailQuiz = (props) => {
                 <RightContent
                     dataQuiz={dataQuiz}
                     handleFinish={handleFinish}
+                    setIndex={setIndex}
                 />
             </div>
             <ModalResult

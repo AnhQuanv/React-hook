@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 const CountDown = (props) => {
 
-    const [count, setCount] = useState(5);
+    const [count, setCount] = useState(25);
 
 
     var toHHMMSS = (secs) => {
