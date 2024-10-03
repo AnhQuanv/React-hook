@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 const CountDown = (props) => {
 
     const [count, setCount] = useState(25);
-
+    const { onTimeUp } = props;
 
     var toHHMMSS = (secs) => {
         var sec_num = parseInt(secs, 10)
@@ -22,7 +22,7 @@ const CountDown = (props) => {
     useEffect(() => {
 
         if (count === 0) {
-            props.onTimeUp();
+            onTimeUp();
             return;
         }
 
@@ -34,7 +34,7 @@ const CountDown = (props) => {
             clearInterval(timer);
         }
 
-    }, [count])
+    }, [count, onTimeUp])
 
     return (
         <div className='countdown-container'>
