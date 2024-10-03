@@ -5,6 +5,7 @@ import { BsEyeSlashFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { postRegister } from '../../services/apiServices';
 import { toast } from 'react-toastify';
+import Language from '../Header/Language';
 
 
 const Register = () => {
@@ -57,6 +58,11 @@ const Register = () => {
 
     return (
         <div className='signup-container'>
+            <div className='header'>
+                <span>Don't have an account yet?</span>
+                <button onClick={() => { navigate('/login') }}>Sign in</button>
+                <Language />
+            </div>
             <div className='title col-4 mx-auto'>
                 Sign Up
             </div>
